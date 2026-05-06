@@ -16,10 +16,11 @@ public:
 
 private:
 
-	//表示する桁数
-	static const int	MaxDigits = 10;
+	KdTexture	m_PlayerTex;
+	KdTexture	m_EnemyTex;
 
-	KdTexture			m_Tex;
-	unsigned long		m_Score = 0;
-	int					m_Digits[MaxDigits] = {};		//各桁の数値を格納
+	Math::Vector2	m_PlayerPos;
+	Math::Vector2	m_EnemyPos;
+
+	float	m_Anime = 0;
 };

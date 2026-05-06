@@ -3,11 +3,12 @@
 //継承の場合のみ.h内での.hインクルード許可
 #include"../BaseScene/BaseScene.h"
 
-class GameScene : public BaseScene
+class TitleScene : public BaseScene
 {
 public:
-	GameScene() { Init(); }
-	~GameScene(){}
+	TitleScene() { Init(); }
+	~TitleScene(){}
+	
 
 	void Init()			override;
 	void Update()		override;
@@ -16,10 +17,8 @@ public:
 
 private:
 
-	//表示する桁数
-	static const int	MaxDigits = 10;
-
-	KdTexture			m_Tex;
-	unsigned long		m_Score = 0;
-	int					m_Digits[MaxDigits] = {};		//各桁の数値を格納
+	KdTexture	m_Tex;
+	KdTexture	m_StartTex;
+	float		m_StartAlpha;
+	float		m_StartAddAlpha;
 };
