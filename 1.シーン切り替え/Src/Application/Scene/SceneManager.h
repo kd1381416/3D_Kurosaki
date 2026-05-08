@@ -39,7 +39,6 @@ private:
 	//初期化や解放は自分でする
 	void Init();
 	void Release();
-
 	//シーン切り替えの関数
 	void ChangeScene(SceneType _scenetype);
 
