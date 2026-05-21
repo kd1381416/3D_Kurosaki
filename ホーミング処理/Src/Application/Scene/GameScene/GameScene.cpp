@@ -46,8 +46,8 @@ void GameScene::Update()
 
 void GameScene::DrawSprite()
 {
-	int burneranime[6] = {0,64,128,192,128,64};
-	Math::Rectangle playerrec = { burneranime,0,64,64 };
+	//int numberanime[6] = {0,64,128,192,128,64};
+	Math::Rectangle playerrec = { 0,0,64,64 };
 	KdShaderManager::Instance().m_spriteShader.DrawTex(&m_PlayerTex, m_PlayerPos.x, m_PlayerPos.y,64,64,&playerrec);
 
 	Math::Rectangle enemyrec = { 0,0,64,64 };
