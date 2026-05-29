@@ -2,6 +2,8 @@
 #include"../SceneManager.h"
 
 #include"../../Object/Ground/Ground.h"
+#include"../../Object/BackGround/BackGround.h"
+#include"../../Object/Cannon/Cannon.h"
 #include"../../Object/Player/Player.h"
 
 void GameScene::Event()
@@ -52,4 +54,25 @@ void GameScene::Init()
 	//std::shared_ptr<Player>	_player;
 	m_Player = std::make_shared<Player>();
 	m_objList.push_back(m_Player);
+
+//===背景===
+	//①ポインタを用意
+	std::shared_ptr<BackGround>	_background;
+	//②実体化
+	_background = std::make_shared<BackGround>();
+	//③初期化
+	//※黒崎はコンストラクタでInit関数を呼んでいるので不要
+	//④ObjectListに追加
+	m_objList.push_back(_background);
+
+//===背景===
+	//①ポインタを用意
+	std::shared_ptr<Cannon>	_Cannon;
+	//②実体化
+	_Cannon = std::make_shared<Cannon>();
+	//③初期化
+	//※黒崎はコンストラクタでInit関数を呼んでいるので不要
+	//④ObjectListに追加
+	m_objList.push_back(_Cannon);
+
 }

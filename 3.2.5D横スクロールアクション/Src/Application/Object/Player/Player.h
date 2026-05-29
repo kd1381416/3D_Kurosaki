@@ -18,8 +18,11 @@ private:
 	std::shared_ptr<KdSquarePolygon>	m_Polygon;
 
 	//座標
-	Math::Vector3	m_Pos;		
+	Math::Vector3	m_Pos;
 
 	//アニメーション用
 	float			m_Anime = 0.0f;
+
+	//重力
+	float			m_Gravity = 0;
 };
