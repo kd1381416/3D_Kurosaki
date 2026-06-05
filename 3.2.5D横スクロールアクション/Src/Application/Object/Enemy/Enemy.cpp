@@ -1,18 +1,18 @@
-﻿#include "Player.h"
-
-#include"../Effect/Effect.h"
+﻿#include "Enemy.h"
 
 #include"../../Scene/SceneManager.h"
 
-//===================================================================
-//初期化
-//===================================================================
-void Player::Init()
+void Enemy::Init()
 {
-	//デバック用:KdGameObjectにポインタを用意しているので実体化
+//===================================================================
+//デバック
+//===================================================================
+	//KdGameObjectにポインタを用意しているので実体化
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-	
-//===画像===
+
+//===================================================================
+//画像読み込み・初期化
+//===================================================================
 	//ポインタのままでは使い物にならないので実体化させる
 	m_Polygon = std::make_shared<KdSquarePolygon>();
 	//画像の読み込み
@@ -22,52 +22,49 @@ void Player::Init()
 	//原点を変更
 	m_Polygon->SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
 
-//===座標===
-	//座標初期化
-	m_Pos = { -20.0f, 2.0f,0.0f };
+//===================================================================
+//当たり判定(被害者)
+//===================================================================
+	//当たられる側
+	//当たり判定を付けたいから実体化
+	m_pCollider = std::make_unique<KdCollider>();
+	//モデルの形状で当たり判定を登録
+	m_pCollider->RegisterCollisionShape(
+		"EnemyCollision",		//当たり判定の識別名
+		{0,0.5,0},				//球の中心点
+		0.2,					//球の半径
+		KdCollider::TypeDamage	//当たり判定のタイプ
+	);
 }
 
-//===================================================================
-//本更新
-//===================================================================
-void Player::Update()
+void Enemy::Update()
 {
+//===================================================================
+//デバック
+//===================================================================
+	m_pDebugWire->AddDebugSphere(m_Pos + Math::Vector3(0.0f, 0.5f, 0.0f), 0.2f, kRedColor);
+
 //===================================================================
 //アニメーション
 //===================================================================
-	int _run[4] = { 24,25,24,26 };
-	m_Polygon->SetUVRect(_run[(int)m_Anime]);
+	int _walk[4] = { 3,4,3,5 };
+	m_Polygon->SetUVRect(_walk[(int)m_Anime]);
 
-	m_Anime += 0.2f;
-	if (m_Anime > 4) { m_Anime = 0; }
+	m_Anime += 0.1f;
+	if (m_Anime > 4) { m_Anime = 0.0f; }
 
 //===================================================================
 //移動処理
 //===================================================================
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000) { m_Pos.x += -0.05f; }
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) { m_Pos.x += 0.05f; }
-
-//===================================================================
-//ジャンプ
-//===================================================================
-	if (GetAsyncKeyState(VK_UP) & 0x8000) { m_Gravity = -0.1f; }
-
-//===================================================================
-//攻撃
-//===================================================================
-	if (GetAsyncKeyState('Z') & 0x8000)
+	//座標を(移動量*方向)で動かす
+	m_Pos.x += (m_Speed * m_Dir);
+	//移動した分目標値に近づける
+	m_Goal += m_Speed;
+	//目標地点についたら反転させる
+	if (m_Goal >= 5.0f) 
 	{
-		//エフェクト追加
-		//①ポインタを用意
-		std::shared_ptr<Effect>	_effect;
-		//②実体化
-		_effect = std::make_shared<Effect>();
-		//③初期化
-		//※黒崎はコンストラクタでInit関数を呼んでいるので不要
-		//④座標をセット
-		_effect->SetPos(m_Pos + Math::Vector3{ 0.5f,0.5f,0.0f });
-		//⑤ObjectListに追加
-		SceneManager::Instance().AddObject(_effect);
+		m_Dir *= -1; 
+		m_Goal = 0;
 	}
 
 //===================================================================
@@ -76,19 +73,9 @@ void Player::Update()
 	m_Pos.y -= m_Gravity;
 	m_Gravity += 0.005f;
 
-//===================================================================
-//座標作成
-//===================================================================
-	//移動
-	Math::Matrix _transmat = Math::Matrix::CreateTranslation(m_Pos);
-	//行列作成
-	m_mWorld = _transmat;
 }
 
-//===================================================================
-//後更新
-//===================================================================
-void Player::PostUpdate()
+void Enemy::PostUpdate()
 {
 //===================================================================
 //当たり判定(レイ(光線)判定)
@@ -126,7 +113,7 @@ void Player::PostUpdate()
 	//レイを遮断しオーバーした長さが一番長いものを探す
 	for (auto& ret : _retraylist)
 	{
-		if(_maxoverlap < ret.m_overlapDistance)
+		if (_maxoverlap < ret.m_overlapDistance)
 		{
 			//更新
 			_maxoverlap = ret.m_overlapDistance;
@@ -134,7 +121,7 @@ void Player::PostUpdate()
 			_hit = true;
 		}
 	}
-	
+
 	if (_hit)
 	{
 		//当たっていたらその座標をプレイヤー座標にセット
@@ -198,12 +185,27 @@ void Player::PostUpdate()
 	m_pDebugWire->AddDebugLine(_ray.m_pos, _ray.m_dir, _ray.m_range);
 	//球判定
 	m_pDebugWire->AddDebugSphere(_sphere.m_sphere.Center, _sphere.m_sphere.Radius);
-}
 
 //===================================================================
-//3D描画
+//行列作成
 //===================================================================
-void Player::DrawLit()
+	//拡大
+	Math::Matrix	_scale = Math::Matrix::CreateScale(1, 1, 1);
+	//移動
+	Math::Matrix	_trans = Math::Matrix::CreateTranslation(m_Pos);
+	//行列合成
+	m_mWorld = _scale * _trans;
+}
+
+void Enemy::DrawLit()
 {
+//===================================================================
+//描画
+//===================================================================
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
+}
+
+void Enemy::OnHit()
+{
+	m_isExpired = true;
 }

@@ -5,9 +5,17 @@
 #include"../../Object/BackGround/BackGround.h"
 #include"../../Object/Cannon/Cannon.h"
 #include"../../Object/Player/Player.h"
+#include"../../Object/Enemy/Enemy.h"
 
 void GameScene::Event()
 {
+//===================================================================
+//デバック用
+//===================================================================
+	//現在のオブジェクト数
+	KdDebugGUI::Instance().ClearLog();
+	KdDebugGUI::Instance().AddLog("%d", (int)m_objList.size());
+
 	//タイトルに戻る
 	if (GetAsyncKeyState('T') & 0x8000)
 	{
@@ -65,7 +73,7 @@ void GameScene::Init()
 	//④ObjectListに追加
 	m_objList.push_back(_background);
 
-//===背景===
+//===大砲===
 	//①ポインタを用意
 	std::shared_ptr<Cannon>	_Cannon;
 	//②実体化
@@ -75,4 +83,18 @@ void GameScene::Init()
 	//④ObjectListに追加
 	m_objList.push_back(_Cannon);
 
+//===敵===
+	//①ポインタを用意
+	std::shared_ptr<Enemy>	_enemy;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		//②実体化
+		_enemy = std::make_shared<Enemy>();
+		//③初期化
+		//※黒崎はコンストラクタでInit関数を呼んでいるので不要
+		_enemy->SetPos({ -20 - float(i),3,0});
+		//④ObjectListに追加
+		m_objList.push_back(_enemy);
+	}
 }
