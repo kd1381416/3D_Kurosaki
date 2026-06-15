@@ -38,7 +38,8 @@ void Player::Update()
 	int _run[4] = { 24,25,24,26 };
 	m_Polygon->SetUVRect(_run[(int)m_Anime]);
 
-	m_Anime += 0.2f;
+	//m_Anime += 0.2f;
+
 	if (m_Anime > 4) { m_Anime = 0; }
 
 //===================================================================

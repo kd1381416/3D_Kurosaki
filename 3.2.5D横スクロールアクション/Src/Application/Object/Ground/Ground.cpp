@@ -31,5 +31,24 @@ void Ground::Init()
 //===================================================================
 void Ground::DrawLit()
 {
+	static float d = 0;
+	float _range = 0.1f;
+	Math::Vector3 _color = { 1,0.3,0.3 };
+
+	if (GetAsyncKeyState('Q') & 0x8000)
+	{
+		d += 0.01;
+		if (d > 1) { d = 1; }
+	}
+
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		d -= 0.01;
+		if (d < 0) { d = 0; }
+	}
+
+	KdShaderManager::Instance().m_StandardShader.SetDissolve(d, &_range, &_color);
+
+
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_Model,m_mWorld);
 }

@@ -85,5 +85,19 @@ void Effect::DrawUnLit()
 //===================================================================
 //描画
 //===================================================================
+	//KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
+}
+
+void Effect::DrawLit()
+{
+//===================================================================
+//描画(加算半透明)
+//===================================================================
+	//加算半透明
+	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Add);
+	
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
+
+	//元に戻す
+	KdShaderManager::Instance().ChangeBlendState(KdBlendState::Alpha);
 }

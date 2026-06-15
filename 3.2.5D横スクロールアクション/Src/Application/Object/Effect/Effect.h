@@ -11,6 +11,7 @@ public:
 	void Update()		override;
 	void PostUpdate()	override;
 	void DrawUnLit()	override;
+	void DrawLit()		override;
 
 private:
 

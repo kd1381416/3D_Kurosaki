@@ -33,3 +33,9 @@ void Cannon::DrawLit()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_Model, m_mWorld);
 }
+
+//ライトブルーム
+void Cannon::DrawBright()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_Model, m_mWorld);
+}

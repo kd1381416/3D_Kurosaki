@@ -7,8 +7,9 @@ public:
 	Cannon() { Init(); }
 	~Cannon() {};
 
-	void Init()		override;
-	void DrawLit()	override;
+	void Init()			override;
+	void DrawLit()		override;
+	void DrawBright()	override;
 
 private:
 

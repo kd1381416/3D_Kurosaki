@@ -45,7 +45,10 @@ void GameScene::Event()
 //被写界深度
 //===================================================================
 	//				　↓ピントを合わせる距離,手前,奥
-	m_camera->SetFocus(5, 3, 8);
+	//m_camera->SetFocus(5, 3, 8);
+
+	//画面全体をちょっとぼかして光らせる
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.3);
 }
 
 void GameScene::Init()

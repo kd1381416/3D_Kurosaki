@@ -40,6 +40,15 @@ void Enemy::Init()
 void Enemy::Update()
 {
 //===================================================================
+//死亡時実行
+//===================================================================
+	if (m_OutroFlg)
+	{
+		OutroUpdate();
+		return;
+	}
+
+//===================================================================
 //ポイントライト(Max100個)
 //===================================================================
 	KdShaderManager::Instance().WorkAmbientController().AddPointLight
@@ -48,15 +57,6 @@ void Enemy::Update()
 		5,									//半径
 		m_Pos + Math::Vector3(0, 0.5, 0)	//位置
 	);
-
-//===================================================================
-//死亡時
-//===================================================================
-	//if (m_OutoroFlg)
-	//{
-	//	OutroUpdate();
-	//	return;
-	//}
 
 //===================================================================
 //デバック
@@ -221,16 +221,25 @@ void Enemy::DrawLit()
 //===================================================================
 //描画
 //===================================================================
+	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_Dissolve);
+
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
 }
 
 void Enemy::OnHit()
 {
-	//m_OutoroFlg = true;
-
-	m_isExpired = true;
+	m_OutroFlg = true;
 }
 
 void Enemy::OutroUpdate()
 {
+	m_Polygon->SetUVRect(35);
+
+	m_Dissolve += 0.01;
+
+	if (m_Dissolve > 1)
+	{
+		//生存フラグをtrueにしてオブジェクトリストから破棄
+		m_isExpired = true;
+	}
 }

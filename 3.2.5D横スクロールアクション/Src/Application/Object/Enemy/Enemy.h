@@ -27,6 +27,8 @@ private:
 	float			m_Anime = 0.0f;		//アニメーション用
 	Math::Vector3	m_Pos = {};			//座標
 	float			m_Gravity = 0;		//重力
+	bool			m_OutroFlg = false;	//死んだときの処理
+	float			m_Dissolve = 0;		//画像が解ける
 
 //===移動処理===
 	int		m_Dir = 1;			//移動方向(1:右,-1:左)
