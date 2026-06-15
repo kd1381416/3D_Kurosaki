@@ -16,7 +16,7 @@ void BackGround::Init()
 	m_mWorld = _scale * _trans;
 }
 
-void BackGround::DrawUnLit()
+void BackGround::DrawLit()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
 }

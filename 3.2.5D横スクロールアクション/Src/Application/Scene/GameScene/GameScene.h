@@ -4,6 +4,7 @@
 
 //前方宣言
 class Player;
+class Ghost;
 
 class GameScene : public BaseScene
 {
@@ -19,4 +20,5 @@ private:
 
 	//変数
 	std::shared_ptr<Player> m_Player;
+	std::shared_ptr<Ghost>	m_Ghost;
 };

@@ -14,6 +14,8 @@ public:
 
 	void OnHit()		override;
 
+	void OutroUpdate();
+
 	//				↓コンスト参照型
 	void SetPos(const Math::Vector3& _pos) override { m_Pos = _pos; }
 

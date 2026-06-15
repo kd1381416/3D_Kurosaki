@@ -9,7 +9,7 @@
 //===================================================================
 void Player::Init()
 {
-	//デバック用:KdGameObjectにポインタを用意しているので実体化
+//デバック用:KdGameObjectにポインタを用意しているので実体化
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	
 //===画像===
@@ -53,7 +53,7 @@ void Player::Update()
 	if (GetAsyncKeyState(VK_UP) & 0x8000) { m_Gravity = -0.1f; }
 
 //===================================================================
-//攻撃
+//攻撃(Zキー)
 //===================================================================
 	if (GetAsyncKeyState('Z') & 0x8000)
 	{
@@ -198,6 +198,14 @@ void Player::PostUpdate()
 	m_pDebugWire->AddDebugLine(_ray.m_pos, _ray.m_dir, _ray.m_range);
 	//球判定
 	m_pDebugWire->AddDebugSphere(_sphere.m_sphere.Center, _sphere.m_sphere.Radius);
+}
+
+//===================================================================
+//影描画
+//===================================================================
+void Player::GenerateDepthMapFromLight()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_Polygon, m_mWorld);
 }
 
 //===================================================================

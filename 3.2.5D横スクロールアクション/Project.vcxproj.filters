@@ -97,6 +97,9 @@
     <Filter Include="Src\Application\Object\Effect">
       <UniqueIdentifier>{6c714d68-3d27-411f-a210-d0b721583d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Object\Ghost">
+      <UniqueIdentifier>{991ec473-06f5-4958-9be1-7e32d75d2925}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="Src\Application\Object\Effect\Effect.h">
       <Filter>Src\Application\Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Object\Ghost\Ghost.h">
+      <Filter>Src\Application\Object\Ghost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -454,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Object\Effect\Effect.cpp">
       <Filter>Src\Application\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Ghost\Ghost.cpp">
+      <Filter>Src\Application\Object\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

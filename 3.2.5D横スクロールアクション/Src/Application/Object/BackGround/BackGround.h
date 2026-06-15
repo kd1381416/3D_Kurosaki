@@ -8,7 +8,7 @@ public:
 	~BackGround() {};
 
 	void Init()		override;
-	void DrawUnLit()	override;
+	void DrawLit()	override;
 
 private:
 

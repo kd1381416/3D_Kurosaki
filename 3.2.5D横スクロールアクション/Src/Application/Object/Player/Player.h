@@ -7,10 +7,13 @@ public:
 	Player() { Init(); }
 	~Player() {};
 
-	void Init()			override;
-	void Update()		override;
-	void PostUpdate()	override;
-	void DrawLit()		override;
+	void Init()							override;
+	void Update()						override;
+	void PostUpdate()					override;
+	void GenerateDepthMapFromLight()	override;
+	void DrawLit()						override;
+	
+	Math::Vector3 GetPos() { return m_Pos; }
 
 private:
 
