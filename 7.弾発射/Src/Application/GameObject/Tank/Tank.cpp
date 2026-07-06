@@ -3,6 +3,7 @@
 #include<Src/Application/Scene/SceneManager.h>
 
 #include"../Camera/CameraBase.h"
+#include"../Bullet/Bullet.h"
 
 void Tank::Init()
 {
@@ -51,6 +52,19 @@ void Tank::Update()
 		_dir += { 1, 0, 0 }; 
 		_moveflg = true;
 	}	
+
+//===================================================================
+// 攻撃(左クリック)
+//===================================================================
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		std::shared_ptr<Bullet>	_bullet;
+		_bullet = std::make_shared<Bullet>();
+		_bullet->Init();
+		_bullet->SetPos(m_Pos + Math::Vector3{ 0,2.0f,0 });
+		_bullet->SetToDir(m_mWorld.Backward());
+		SceneManager::Instance().AddObject(_bullet);
+	}
 
 	//移動中
 	if(_moveflg)

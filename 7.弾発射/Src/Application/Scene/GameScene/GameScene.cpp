@@ -10,6 +10,9 @@
 
 void GameScene::Event()
 {
+	KdDebugGUI::Instance().ClearLog();
+	KdDebugGUI::Instance().AddLog("GameObj=%d\n", m_objList.size());
+
 	if (GetAsyncKeyState('T') & 0x8000)
 	{
 		SceneManager::Instance().SetNextScene

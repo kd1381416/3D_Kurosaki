@@ -103,6 +103,9 @@
     <Filter Include="Src\Application\GameObject\Enemy\Moto">
       <UniqueIdentifier>{45ad1dd1-3ce9-4996-8826-d1edaee95729}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Bullet">
+      <UniqueIdentifier>{faa73f49-8c5f-454c-9141-99d5281ff0b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -303,6 +306,9 @@
     <ClInclude Include="Src\Application\GameObject\Enemy\Moto\Moto.h">
       <Filter>Src\Application\GameObject\Enemy\Moto</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Bullet\Bullet.h">
+      <Filter>Src\Application\GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -472,6 +478,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Enemy\Moto\Moto.cpp">
       <Filter>Src\Application\GameObject\Enemy\Moto</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Bullet\Bullet.cpp">
+      <Filter>Src\Application\GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
