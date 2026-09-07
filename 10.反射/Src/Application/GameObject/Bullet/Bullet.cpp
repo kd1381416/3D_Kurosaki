@@ -47,16 +47,44 @@ void Bullet::PostUpdate()
 	//球の半径設定
 	_sphere.m_sphere.Radius = 1.0f;
 	//当たり判定をしたいタイプ
-	_sphere.m_type = KdCollider::TypeDamage;
+	_sphere.m_type = KdCollider::TypeDamage | KdCollider::TypeGround;
 
 	//全てのオブジェクトと当たり判定をする
+	std::list<KdCollider::CollisionResult>	_hitresultlist;
+
 	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		//敵と当たったら入る
-		if (obj->Intersects(_sphere, nullptr))
+		if (obj->Intersects(_sphere, &_hitresultlist));
+	}
+
+	//最初に当たったオブジェクト(一番近いオブジェクト)を検出
+	float			_overlap	= 0.0f;
+	bool			_hit		= false;
+	Math::Vector3	_normal;				//法線(面に対して垂直なベクトル)
+
+
+	for (auto& ret : _hitresultlist)
+	{
+		if (_overlap < ret.m_overlapDistance)
 		{
-			obj->OnHit();
+			//更新
+			_overlap = ret.m_overlapDistance;
+			_hit = true;
+
+			_normal = ret.m_hitNDir;
 		}
+	}
+
+	if (_hit)
+	{
+		//反射ベクトルを求める
+		float			_dot	= -m_ToDir.Dot(_normal);
+		Math::Vector3	_r		= m_ToDir + 2 * _dot * _normal;
+
+		_r.Normalize();
+
+		m_ToDir = _r;
 	}
 
 	//===================================================================

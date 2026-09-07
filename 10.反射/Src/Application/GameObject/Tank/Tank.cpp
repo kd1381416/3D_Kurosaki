@@ -145,10 +145,21 @@ void Tank::Update()
 			}
 			else
 			{
+				//戦車の向いている方向に弾を飛ばす
 				_bulletdir = m_mWorld.Backward();
 			}
 
-			//戦車の向いている方向に弾を飛ばす
+			//弾をばらつかせる
+			float	_x = DirectX::XMConvertToRadians(rand() % 5 - 2);
+			float	_y = DirectX::XMConvertToRadians(rand() % 5 - 2);
+			float	_z = DirectX::XMConvertToRadians(rand() % 5 - 2);
+
+			//XYZ回転(Yaw;Y軸 Pitch	:X軸 Roll:Z軸)
+			Math::Matrix	_bulletRotationMat = Math::Matrix::CreateFromYawPitchRoll(_y, _x, _z);
+
+			//弾の発射方向(ベクトル)を変更する
+			_bulletdir = Math::Vector3::TransformNormal(_bulletdir, _bulletRotationMat);
+
 			_bullet->SetToDir(_bulletdir);
 			SceneManager::Instance().AddObject(_bullet);
 
@@ -248,7 +259,7 @@ void Tank::Update()
 			//===================================================================
 			//当たり判定(球)
 			//===================================================================
-				//球判定用の変数を用意
+			//球判定用の変数を用意
 			KdCollider::SphereInfo _sphere;
 			//球の中心座標を設定
 			_sphere.m_sphere.Center = GetPos();

@@ -6,7 +6,7 @@ void Ground::Init()
 // モデル読み込み
 //===================================================================
 	m_Model = std::make_shared<KdModelData>();
-	m_Model->Load("Asset/Model/Ground/Ground.gltf");
+	m_Model->Load("Asset/Model/Ground_r/Ground_r.gltf");
 
 //当たられる側
 //当たり判定を付けたいから実体化
